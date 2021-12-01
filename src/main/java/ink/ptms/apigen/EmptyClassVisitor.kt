@@ -9,13 +9,13 @@ import org.objectweb.asm.*
  * @author sky
  * @since 2021/10/7 3:17 下午
  */
-class EmptyClassVisitor(visitor: ClassVisitor) : ClassVisitor(Opcodes.ASM7, visitor) {
+class EmptyClassVisitor(visitor: ClassVisitor) : ClassVisitor(Opcodes.ASM9, visitor) {
 
     override fun visitMethod(access: Int, name: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor {
         return EmptyMethodVisitor(super.visitMethod(access, name, descriptor, signature, exceptions))
     }
 
-    class EmptyMethodVisitor(visitor: MethodVisitor): MethodVisitor(Opcodes.ASM7, visitor) {
+    class EmptyMethodVisitor(visitor: MethodVisitor): MethodVisitor(Opcodes.ASM9, visitor) {
 
         override fun visitIincInsn(`var`: Int, increment: Int) {
         }
