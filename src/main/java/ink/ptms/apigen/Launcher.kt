@@ -24,17 +24,21 @@ object Launcher {
             JarFile(file).use { jarFile ->
                 for (jarEntry in jarFile.entries()) {
                     jarFile.getInputStream(jarEntry).use {
-                        val path = jarEntry.name
-                        if (path.endsWith(".class")) {
-                            val reader = ClassReader(it)
-                            val writer = ClassWriter(0)
-                            val visitor = EmptyClassVisitor(writer)
-                            reader.accept(visitor, 0)
-                            out.putNextEntry(JarEntry(path))
-                            out.write(writer.toByteArray())
-                        } else {
-                            out.putNextEntry(JarEntry(path))
-                            out.write(it.readBytes())
+                        try {
+                            val path = jarEntry.name
+                            if (path.endsWith(".class")) {
+                                val reader = ClassReader(it)
+                                val writer = ClassWriter(0)
+                                val visitor = EmptyClassVisitor(writer)
+                                reader.accept(visitor, 0)
+                                out.putNextEntry(JarEntry(path))
+                                out.write(writer.toByteArray())
+                            } else {
+                                out.putNextEntry(JarEntry(path))
+                                out.write(it.readBytes())
+                            }
+                        } catch (ex: Throwable) {
+                            ex.printStackTrace()
                         }
                     }
                 }
