@@ -19,7 +19,7 @@ object Launcher {
         if (!file.exists()) {
             error("file not found")
         }
-        val fileOutput = File(file.parent, "${file.nameWithoutExtension}-api.jar")
+        val fileOutput = File(file.parent, "${file.nameWithoutExtension}.min.jar")
         JarOutputStream(FileOutputStream(fileOutput)).use { out ->
             JarFile(file).use { jarFile ->
                 for (jarEntry in jarFile.entries()) {
