@@ -19,13 +19,17 @@ object Launcher {
         if (!file.exists()) {
             error("file not found")
         }
+        val exclude = args.drop(1)
         val fileOutput = File(file.parent, "${file.nameWithoutExtension}.min.jar")
         JarOutputStream(FileOutputStream(fileOutput)).use { out ->
             JarFile(file).use { jarFile ->
                 for (jarEntry in jarFile.entries()) {
-                    jarFile.getInputStream(jarEntry).use {
+                    jarFile.getInputStream(jarEntry).use l1@ {
                         try {
                             val path = jarEntry.name
+                            if (exclude.any { e -> path.contains(e) }) {
+                                return@l1
+                            }
                             if (path.endsWith(".class")) {
                                 val reader = ClassReader(it)
                                 val writer = ClassWriter(0)
