@@ -15,8 +15,8 @@ targetCompatibility = '1.8'
 shadowJar {
     mainClassName = 'ink.ptms.apigen.Launcher'
     dependencies {
-        include dependency('org.ow2.asm:asm:9.1')
-        include dependency('org.ow2.asm:asm-commons:9.1')
+        include dependency('org.ow2.asm:asm:.+')
+        include dependency('org.ow2.asm:asm-commons:.+')
         include dependency('org.jetbrains.kotlin:kotlin-stdlib')
     }
 }
@@ -26,8 +26,8 @@ repositories {
 }
 
 dependencies {
-    implementation "org.ow2.asm:asm:9.1"
-    implementation "org.ow2.asm:asm-commons:9.1"
+    implementation "org.ow2.asm:asm:+"
+    implementation "org.ow2.asm:asm-commons:+"
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(dir: 'libs', includes: ['*.jar'])
 }
